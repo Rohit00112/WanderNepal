@@ -1,10 +1,9 @@
-// Conditional import for notifications - only available in development builds
+// Notifications are disabled in Expo Go - will be enabled in development builds
 let Notifications: any = null;
-try {
-  Notifications = require('expo-notifications');
-} catch (error) {
-  console.warn('expo-notifications not available in Expo Go. Notifications will be disabled.');
-}
+let notificationsAvailable = false;
+
+// For now, we'll disable notifications to avoid Expo Go issues
+console.log('📱 Notifications are disabled in Expo Go. Use a development build for full notification support.');
 import { Platform } from 'react-native';
 
 type NotificationData = {

@@ -2,13 +2,23 @@ import * as Location from 'expo-location';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Platform } from 'react-native';
 
-// Conditional import for notifications - only available in development builds
+// Notifications are disabled in Expo Go - will be enabled in development builds
 let Notifications: any = null;
+let notificationsAvailable = false;
+
+// For now, we'll disable notifications to avoid Expo Go issues
+// In a development build, you can uncomment the following lines:
+/*
 try {
   Notifications = require('expo-notifications');
+  notificationsAvailable = true;
 } catch (error) {
-  console.warn('expo-notifications not available in Expo Go. Notifications will be disabled.');
+  console.log('expo-notifications not available');
+  notificationsAvailable = false;
 }
+*/
+
+console.log('📱 Notifications are disabled in Expo Go. Use a development build for full notification support.');
 
 // Types
 export interface AltitudeData {
@@ -370,12 +380,14 @@ class AltitudeService {
 
   // Send a notification to the user
   private async sendNotification(title: string, body: string, isPriority: boolean = false): Promise<void> {
+    // Always log to console for debugging
+    console.log(`📱 Notification: ${title} - ${body}`);
+    
+    if (!notificationsAvailable || !Notifications) {
+      return;
+    }
+    
     try {
-      if (!Notifications) {
-        console.log(`Notification (${title}): ${body}`);
-        return;
-      }
-
       await Notifications.scheduleNotificationAsync({
         content: {
           title,
@@ -387,8 +399,6 @@ class AltitudeService {
       });
     } catch (error) {
       console.error('Error sending notification:', error);
-      // Fallback to console log
-      console.log(`Notification (${title}): ${body}`);
     }
   }
 

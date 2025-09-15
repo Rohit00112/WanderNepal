@@ -8,17 +8,6 @@ import { SplashScreen } from 'expo-router';
 import { AuthProvider, useAuth } from '@/contexts/AuthContext';
 
 const RootLayoutInner = () => {
-  const { user } = useAuth();
-  const router = useRouter();
-
-  useEffect(() => {
-    // Handle authentication-based navigation
-    if (user === null) {
-      // User is not authenticated, redirect to login
-      router.replace('/login');
-    }
-  }, [user, router]);
-
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
       <Stack screenOptions={{ headerShown: false }}>
