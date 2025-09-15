@@ -34,7 +34,7 @@ class WeatherService {
     return 'An unexpected error occurred while fetching weather data.';
   }
 
-  private readonly DESTINATION_COORDINATES = {
+  private readonly DESTINATION_COORDINATES: Record<string, { lat: number; lon: number }> = {
     'Upper Mustang': { lat: 29.1892, lon: 83.9689 },
     'Rara Lake': { lat: 29.5333, lon: 82.0833 },
     'Annapurna Base Camp': { lat: 28.5312, lon: 83.8775 },

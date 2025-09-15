@@ -262,7 +262,7 @@ export default function Festivals() {
   }).slice(0, 5);
 
   // Render featured festival item in carousel
-  const renderFeaturedFestival = ({ item, index }) => {
+  const renderFeaturedFestival = ({ item, index }: any) => {
     const inputRange = [
       (index - 1) * CAROUSEL_ITEM_WIDTH,
       index * CAROUSEL_ITEM_WIDTH,
@@ -337,7 +337,7 @@ export default function Festivals() {
     );
   };
 
-  const renderUpcomingFestival = ({ item }) => (
+  const renderUpcomingFestival = ({ item }: any) => (
     <TouchableOpacity
       style={styles.upcomingFestivalCard}
       onPress={() => {
@@ -365,7 +365,7 @@ export default function Festivals() {
       
       <View style={styles.detailImageContainer}>
         <Image
-          source={{ uri: selectedFestival.image }}
+          source={{ uri: selectedFestival?.image }}
           style={styles.festivalDetailImage}
         />
         <LinearGradient
@@ -393,10 +393,10 @@ export default function Festivals() {
             </View>
           </View>
           
-          <Text style={styles.detailFestivalName}>{selectedFestival.name}</Text>
+          <Text style={styles.detailFestivalName}>{selectedFestival?.name}</Text>
           
           <View style={styles.detailCategoryContainer}>
-            <Text style={styles.detailCategoryText}>{selectedFestival.category}</Text>
+            <Text style={styles.detailCategoryText}>{selectedFestival?.category}</Text>
           </View>
         </LinearGradient>
       </View>
@@ -408,9 +408,9 @@ export default function Festivals() {
             <View style={styles.detailInfoCardText}>
               <Text style={styles.detailInfoTitle}>Date</Text>
               <Text style={styles.detailInfoValue}>
-                {selectedFestival.startDate === selectedFestival.endDate
-                  ? selectedFestival.startDate
-                  : `${selectedFestival.startDate} - ${selectedFestival.endDate}`}
+                {selectedFestival?.startDate === selectedFestival?.endDate
+                  ? selectedFestival?.startDate
+                  : `${selectedFestival?.startDate} - ${selectedFestival?.endDate}`}
               </Text>
             </View>
           </View>
@@ -419,14 +419,14 @@ export default function Festivals() {
             <MapPin size={20} color="#FF385C" />
             <View style={styles.detailInfoCardText}>
               <Text style={styles.detailInfoTitle}>Location</Text>
-              <Text style={styles.detailInfoValue}>{selectedFestival.location}</Text>
+              <Text style={styles.detailInfoValue}>{selectedFestival?.location}</Text>
             </View>
           </View>
         </View>
         
         <View style={styles.detailSection}>
           <Text style={styles.detailSectionTitle}>About the Festival</Text>
-          <Text style={styles.detailDescription}>{selectedFestival.description}</Text>
+          <Text style={styles.detailDescription}>{selectedFestival?.description}</Text>
         </View>
         
         <View style={styles.detailSection}>
@@ -434,7 +434,7 @@ export default function Festivals() {
             <Music size={20} color="#FF385C" />
             <Text style={styles.detailSectionTitle}>Activities & Traditions</Text>
           </View>
-          {selectedFestival.activities.map((activity, index) => (
+          {selectedFestival?.activities.map((activity, index) => (
             <View key={index} style={styles.bulletItem}>
               <View style={styles.bullet} />
               <Text style={styles.bulletText}>{activity}</Text>
@@ -447,7 +447,7 @@ export default function Festivals() {
             <Info size={20} color="#FF385C" />
             <Text style={styles.detailSectionTitle}>Traveler Tips</Text>
           </View>
-          {selectedFestival.tips.map((tip, index) => (
+          {selectedFestival?.tips.map((tip, index) => (
             <View key={index} style={styles.bulletItem}>
               <View style={styles.bullet} />
               <Text style={styles.bulletText}>{tip}</Text>
