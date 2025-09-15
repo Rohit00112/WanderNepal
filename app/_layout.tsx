@@ -1,12 +1,12 @@
-import { useEffect, useCallback } from 'react';
+import { useEffect } from 'react';
 import { Stack } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
+import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { useFonts, DMSans_400Regular, DMSans_500Medium, DMSans_700Bold } from '@expo-google-fonts/dm-sans';
 import * as SplashScreen from 'expo-splash-screen';
 import { AuthProvider } from '@/contexts/AuthContext';
-import { NavigationContainer } from '@react-navigation/native';
 
-// Prevent splash screen from auto-hiding
+// Keep the splash screen visible while we fetch resources
 SplashScreen.preventAutoHideAsync();
 
 export default function RootLayout() {
@@ -16,33 +16,21 @@ export default function RootLayout() {
     'DMSans-Bold': DMSans_700Bold,
   });
 
-  const onLayoutRootView = useCallback(async () => {
+  useEffect(() => {
     if (fontsLoaded || fontError) {
-      try {
-        await SplashScreen.hideAsync();
-      } catch (error) {
-        console.error('Error hiding splash screen:', error);
-      }
+      SplashScreen.hideAsync();
     }
   }, [fontsLoaded, fontError]);
-
-  useEffect(() => {
-    onLayoutRootView();
-  }, [onLayoutRootView]);
 
   if (!fontsLoaded && !fontError) {
     return null;
   }
 
   return (
+    <GestureHandlerRootView style={{ flex: 1 }}>
       <AuthProvider>
-        <Stack
-          screenOptions={{
-            headerShown: false,
-            animation: 'fade',
-          }}
-        >
-          <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+        <Stack screenOptions={{ headerShown: false }}>
+          <Stack.Screen name="(tabs)" />
           <Stack.Screen name="booking" />
           <Stack.Screen name="login" />
           <Stack.Screen name="register" />
@@ -60,6 +48,7 @@ export default function RootLayout() {
           <Stack.Screen name="emergency-sos" />
           <Stack.Screen name="altitude-monitor" />
           <Stack.Screen name="altitude-settings" />
+          <Stack.Screen name="altitude-symptoms" />
           <Stack.Screen name="altitude-info" />
           <Stack.Screen name="trek-analyzer" />
           <Stack.Screen name="offline-routes" />
@@ -74,5 +63,6 @@ export default function RootLayout() {
         </Stack>
         <StatusBar style="auto" />
       </AuthProvider>
+    </GestureHandlerRootView>
   );
 }
